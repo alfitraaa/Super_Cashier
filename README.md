@@ -1,6 +1,6 @@
 # Python Project: Self-Service Super Cashier
 ## Background
-Self-Service Super Cashier is a cashier program that can be run by the customers themself. This program will help Andi as an owner of one of the major supermarkets in Indonesia to develop his business processes with several features such as: customers can directly enter the items purchased, the number of items purchased, the price of the items and so on. So that customers who are not in the city can buy from the supermarket.
+__Self-Service Super Cashier__ is a cashier program that can be run by the customers themself. This program will help Andi as an owner of one of the major supermarkets in Indonesia to develop his business processes with several features such as: customers can directly enter the items purchased, the number of items purchased, the price of the items and so on. So that customers who are not in the city can buy from the supermarket.
 
 ## Features Requirement
 Some of the requirements that Andi needs for the program are as the follows:
@@ -10,9 +10,9 @@ Some of the requirements that Andi needs for the program are as the follows:
 - Customer can deletes any of their shopping list or all of them if they cancel the purchase. 
 - Checks their shopping list to make sure there is no error.
 - Customer can checks the total price of their purchases along with additional discounts with conditions:
-    a. If the total price is above Rp200.000, then get 5% discount.
-    b. If the total price is above Rp300.000, then get 8% discount.
-    c. If the total price is above Rp500.000, then get 10% discount.
+    - If the total price is above Rp200.000, then get 5% discount.
+    - If the total price is above Rp300.000, then get 8% discount.
+    - If the total price is above Rp500.000, then get 10% discount.
 Along with several other features that can be added if there are still features that have not been covered in the system.
 
 ## Program Flow
