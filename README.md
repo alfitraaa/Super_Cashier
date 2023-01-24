@@ -26,6 +26,9 @@ How is the process flow of this Super Cashier program?
 7. Once the customer is informed about the total price of their items, they can finally proceed to check out.
 The flowchart is shown in the following picture:
 
+<p align="center">
+    <img src="https://github.com/alfitraaa/Super_Cashier/blob/main/super_cashier_flowchart.png?raw=true" width="540" height="960">
+</p>
 
 ## Test Case and Outputs
 ### Test Case 1:
