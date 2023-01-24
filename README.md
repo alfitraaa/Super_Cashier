@@ -28,22 +28,34 @@ The flowchart is shown in the following picture:
 
 
 ## Test Case and Outputs
-###Test Case 1:
+### Test Case 1:
 1. Customer adds 2 new items to the shopping list using the add_item() method.
+
+![App Screenshot](https://github.com/alfitraaa/Super_Cashier/blob/main/test_case_images/test_case(1).png?raw=true)
 
 2. It turns out that the customer incorrectly entered one of the items that have been added, then the customer uses the delete_item() method to delete the item.
 
 3. The customer want to repeat from the beginning, instead of deleting one by one, the customer can simply use the reset_transaction() method to delete all items that have been added.
 
+![App Screenshot](https://github.com/alfitraaa/Super_Cashier/blob/main/test_case_images/test_case(2,%203).png?raw=true)
+
 4. When done shopping, the consumer can review the list of items and use the total_price() method to get the total amount paid.
 
-###Test Case 2:
+![App Screenshot](https://github.com/alfitraaa/Super_Cashier/blob/main/test_case_images/test_case(4).png?raw=true)
+
+### Test Case 2:
 Customer_2 decides to purchase toiletries and entered many things into the item list.
 1. Because of the rush, it was found that there were several errors in the input of the name, quantity and price of the items. Customer_2 can update the item using update method.
 
+![App Screenshot](https://github.com/alfitraaa/Super_Cashier/blob/main/test_case_images/test_case(5).png?raw=true)
+
 2. Then customer_2 checked again using the check_order() method, apparently found an error. Customer_2 incorrectly inputs the quantity of the items that should be an integer into a string. Then customer_2 deleted it.
 
+![App Screenshot](https://github.com/alfitraaa/Super_Cashier/blob/main/test_case_images/test_case(6).png?raw=true)
+
 3. After checking and knowing the total price that customer_2 must to pay, customer_2 finally checks out the item list using check_out() method and gets the shopping receipt.
+
+![App Screenshot](https://github.com/alfitraaa/Super_Cashier/blob/main/test_case_images/test_case(7).png?raw=true)
 
 ## Conclusion
 Andi now has a program that can help his business processes become more independent, with several features from the Super Cashier program that allows customers to make their own transactions at Andi's Supermarket, no matter if the customers are in different places. These features are:
