@@ -11,7 +11,13 @@ from datetime import datetime
 # Create class from transaction ID
 class Transaction:
   def __init__(self):
+    self.grand_total_price = 0
     self.item_list = {} # Defines an attribute in the class, empty dictionary
+
+  def _init_state(self):
+    self.name = [str(key[0]) for key in self.item_list.items()]
+    self.quantity = [qty[0] for qty in [values for values in self.item_list.values()]]
+    self.price = [prc[1] for prc in [values for values in self.item_list.values()]]
 
   def __str__(self):
     '''
@@ -22,10 +28,7 @@ class Transaction:
     to make the process of the function easier.
 
     '''
-    self.name = [str(key[0]) for key in self.item_list.items()]
-    self.quantity = [qty[0] for qty in [values for values in self.item_list.values()]]
-    self.price = [prc[1] for prc in [values for values in self.item_list.values()]]
-    self.grand_total_price = 0
+    self._init_state()
     return str(self.item_list)
 
 # 1. Create a method to add shopping items.
@@ -127,6 +130,7 @@ class Transaction:
     
     '''
     check_wrong_input = []
+    self._init_state()
     # Check one by one the quantity of each item, whether the data type is integer or not.
     for qty in self.quantity:
       if type(qty) == int:
@@ -168,7 +172,9 @@ class Transaction:
     
     '''
 
+    self._init_state()
     # Using try and except to make it easier to track errors.
+    self.grand_total_price = 0
     try:
       # Displays all item in the list.
       n = 0
@@ -220,6 +226,7 @@ class Transaction:
     
     '''
     # Check one by one the quantity of each item, whether the data type is integer or not.
+    self._init_state()
     check_wrong_input = []
     for qty in self.quantity:
       if type(qty) == int:
