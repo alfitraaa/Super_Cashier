@@ -88,13 +88,12 @@ As a legacy portfolio project, the current implementation has several limitation
 
 To run this project locally, ensure you have Python installed, then clone the repository:
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/alfitraaa/Super_Cashier.git
-   cd Super_Cashier
-   ```
+```bash
+git clone https://github.com/alfitraaa/Super_Cashier.git
+cd Super_Cashier
+```
 
-2. Open and explore `test_case.ipynb`. This Jupyter Notebook serves as the canonical example of the supported execution flow and demonstrates how to initialize and use the `Transaction` class found in `super_cashier.py`.
+The current implementation is best explored through `test_case.ipynb`, which demonstrates the supported execution sequence and existing project behavior using the `Transaction` class from `super_cashier.py`.
 
 ## Author / Contact
 
