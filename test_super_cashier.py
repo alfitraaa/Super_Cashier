@@ -59,8 +59,6 @@ def test_reset_transaction_no(mock_input):
 def test_check_order_valid(capsys):
     t = Transaction()
     t.add_item("Apple", 2, 10000)
-    # KNOWN QUIRK: __str__ initializes derived attributes used by validation.
-    str(t)
     t.check_order()
     captured = capsys.readouterr()
     assert "Order is correct" in captured.out
@@ -69,8 +67,6 @@ def test_check_order_valid(capsys):
 def test_check_order_invalid_qty(capsys):
     t = Transaction()
     t.add_item("Apple", "two", 10000)
-    # KNOWN QUIRK: __str__ initializes derived attributes used by validation.
-    str(t)
     t.check_order()
     captured = capsys.readouterr()
     assert "There is a data input error" in captured.out
@@ -79,8 +75,6 @@ def test_check_order_invalid_qty(capsys):
 def test_check_order_invalid_price(capsys):
     t = Transaction()
     t.add_item("Apple", 2, "ten thousand")
-    # KNOWN QUIRK: __str__ initializes derived attributes used by validation.
-    str(t)
     t.check_order()
     captured = capsys.readouterr()
     assert "There is a data input error" in captured.out
@@ -89,7 +83,6 @@ def test_check_order_invalid_price(capsys):
 def test_total_price_no_discount(capsys):
     t = Transaction()
     t.add_item("Apple", 2, 50000)  # Total: 100,000
-    str(t)
     t.total_price()
     captured = capsys.readouterr()
     assert "Total : 100000" in captured.out
@@ -99,7 +92,6 @@ def test_total_price_no_discount(capsys):
 def test_total_price_200k_boundary_no_discount(capsys):
     t = Transaction()
     t.add_item("Apple", 2, 100000)  # Total: 200,000
-    str(t)
     t.total_price()
     captured = capsys.readouterr()
     assert "Total : 200000" in captured.out
@@ -109,7 +101,6 @@ def test_total_price_200k_boundary_no_discount(capsys):
 def test_total_price_5_percent_discount(capsys):
     t = Transaction()
     t.add_item("Apple", 2, 125000)  # Total: 250,000
-    str(t)
     t.total_price()
     captured = capsys.readouterr()
     assert "Total : 250000" in captured.out
@@ -120,7 +111,6 @@ def test_total_price_5_percent_discount(capsys):
 def test_total_price_300k_boundary_uses_5_percent(capsys):
     t = Transaction()
     t.add_item("Apple", 2, 150000)  # Total: 300,000
-    str(t)
     t.total_price()
     captured = capsys.readouterr()
     assert "Total : 300000" in captured.out
@@ -131,7 +121,6 @@ def test_total_price_300k_boundary_uses_5_percent(capsys):
 def test_total_price_8_percent_discount(capsys):
     t = Transaction()
     t.add_item("Apple", 4, 100000)  # Total: 400,000
-    str(t)
     t.total_price()
     captured = capsys.readouterr()
     assert "Total : 400000" in captured.out
@@ -142,7 +131,6 @@ def test_total_price_8_percent_discount(capsys):
 def test_total_price_500k_boundary_uses_8_percent(capsys):
     t = Transaction()
     t.add_item("Apple", 5, 100000)  # Total: 500,000
-    str(t)
     t.total_price()
     captured = capsys.readouterr()
     assert "Total : 500000" in captured.out
@@ -153,9 +141,63 @@ def test_total_price_500k_boundary_uses_8_percent(capsys):
 def test_total_price_10_percent_discount(capsys):
     t = Transaction()
     t.add_item("Apple", 2, 300000)  # Total: 600,000
-    str(t)
     t.total_price()
     captured = capsys.readouterr()
     assert "Total : 600000" in captured.out
     assert "Discount : 10%" in captured.out
     assert "The total amount to be paid is: Rp 540000.0" in captured.out
+
+
+def test_total_price_repeated_calls_deterministic(capsys):
+    t = Transaction()
+    t.add_item("Apple", 2, 125000) # Total 250,000, 5% discount -> 237,500
+
+    # First call
+    t.total_price()
+    captured_first = capsys.readouterr()
+    assert "Total : 250000" in captured_first.out
+    assert "The total amount to be paid is: Rp 237500.0" in captured_first.out
+
+    # Second call
+    t.total_price()
+    captured_second = capsys.readouterr()
+    assert "Total : 250000" in captured_second.out
+    assert "The total amount to be paid is: Rp 237500.0" in captured_second.out
+
+
+@mock.patch("builtins.input", return_value="Andi")
+def test_checkout_works_without_str_call(mock_input, capsys):
+    t = Transaction()
+    t.add_item("Apple", 2, 10000)
+    t.total_price() # compute grand_total_price
+
+    # Clear the buffer to ensure we only capture check_out output
+    capsys.readouterr()
+
+    t.check_out()
+    captured = capsys.readouterr()
+    assert "Welcome to Andi's Supermarket" in captured.out
+    assert "Rp 20000" in captured.out
+
+
+def test_check_order_works_after_update_without_str(capsys):
+    t = Transaction()
+    t.add_item("Apple", 2, 10000)
+    t.update_item_qty("Apple", 5)
+    t.check_order()
+    captured = capsys.readouterr()
+    assert "Order is correct" in captured.out
+    assert "5 " in captured.out # Qty column
+
+
+def test_delete_item_reflected_in_total_price_without_str(capsys):
+    t = Transaction()
+    t.add_item("Apple", 2, 10000)
+    t.add_item("Banana", 3, 5000)
+    t.delete_item("Apple")
+    t.total_price()
+    captured = capsys.readouterr()
+    assert "Apple" not in captured.out
+    assert "Banana" in captured.out
+    assert "Total : 15000" in captured.out
+    assert "The total amount to be paid is: Rp 15000" in captured.out
