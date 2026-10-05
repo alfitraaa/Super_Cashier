@@ -1,6 +1,6 @@
 # Self-Service Super Cashier
 
-**Self-Service Super Cashier** is a Python-based terminal application that allows customers to independently input their purchases, calculate total costs, and generate a receipt. This repository serves as an educational portfolio project demonstrating foundational Python programming concepts and basic business-rule implementation.
+**Self-Service Super Cashier** is a Python-based self-service cashier simulation built around a `Transaction` class. It allows customers to independently input their purchases, calculate total costs, and generate a receipt. This repository serves as an educational portfolio project demonstrating foundational Python programming concepts and basic business-rule implementation.
 
 ## Problem / Objective
 
@@ -11,10 +11,10 @@ The objective of this project is to streamline the checkout process for Andi, a 
 - **Add Items**: Customers can add items by specifying the name, quantity, and price.
 - **Update Items**: Customers can correct mistakes by updating an item's name, quantity, or price.
 - **Delete Items**: Customers can remove individual items or reset the entire transaction.
-- **Input Validation**: The system checks if quantity and price inputs are valid before proceeding.
-- **Discount Calculation**: Automatically applies tiered discounts based on the total purchase amount:
+- **Input Validation**: The system checks and detects invalid quantity or price types during order validation (e.g., when calling methods like `check_order` or `check_out`). It does not prevent invalid inputs from being added initially.
+- **Discount Calculation**: The project outlines business rules for applying tiered discounts based on the total purchase amount:
   - 5% discount for totals above Rp200,000.
-  - 8% discount for totals above Rp300,000.
+  - 8% discount for totals above Rp300,000 (Note: there is a known limitation in the implementation of this tier).
   - 10% discount for totals above Rp500,000.
 - **Checkout / Receipt Generation**: Displays a final list of purchased items, total price, and applied discounts in a structured receipt format.
 
@@ -37,8 +37,8 @@ This project is built purely in Python and demonstrates the following technical 
 
 - **Object-Oriented Programming (OOP)**: Core logic is encapsulated within a `Transaction` class.
 - **Transaction-State Handling**: Uses a dictionary to store and manage the current state of items in the cart.
-- **CRUD-like Item Operations**: Implements methods to Create, Read, Update, and Delete items.
-- **Validation Logic**: Basic type checking ensures quantities and prices are integers before processing.
+- **Item Management Operations**: Implements methods to Create, Read, Update, and Delete items from the shopping list.
+- **Validation Logic**: Basic type checking checks if quantities and prices are integers during order validation.
 - **Conditional Discount Logic**: Implements business rules to apply specific discount percentages based on spending thresholds.
 - **Receipt/Output Generation**: Utilizes f-strings and the `datetime` module to format terminal output into a readable receipt.
 
@@ -78,9 +78,11 @@ The project includes manual test scenarios (available in the Jupyter Notebook) t
 
 As a legacy portfolio project, the current implementation has several limitations that could be addressed in future iterations:
 - **In-Memory Storage**: Data is only stored in memory during the active session. There is no database integration for long-term persistence or historical records.
+- **No Executable CLI**: The project is designed to be interacted with via the Python interactive interpreter or a Jupyter Notebook; it lacks a standalone executable terminal application entry point.
 - **Terminal-Based Interface**: There is no graphical user interface (GUI) or web front-end; interaction is strictly via command-line / code execution.
 - **Manual Testing**: Testing relies on manual execution of scenarios within the provided notebook. There is no automated test suite.
 - **Hardcoded Product Entry**: Customers must manually type the item name, price, and quantity. A predefined catalog or inventory system would prevent data entry errors.
+- **Discount Implementation Defect**: The source code contains a defect in the 8% discount branch within the `total_price` method, referencing an incorrect variable scope.
 
 ## Running the Project
 
@@ -100,6 +102,8 @@ To run this project locally, ensure you have Python installed, then clone the re
 
    my_cart = Transaction()
    my_cart.add_item("Apple", 5, 10000)
+   # To compute and apply discounts before checking out, total_price must be run:
+   my_cart.total_price()
    my_cart.check_out()
    ```
 
