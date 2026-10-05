@@ -192,8 +192,8 @@ class Transaction:
       if 300_000 >= self.grand_total_price > 200_000:
           self.grand_total_price -= self.grand_total_price * 0.05
           print('Discount : 5%')
-      elif 500_000 >= grand_total_price > 300_000:
-          grand_total_price -= grand_total_price * 0.08
+      elif 500_000 >= self.grand_total_price > 300_000:
+          self.grand_total_price -= self.grand_total_price * 0.08
           print('Discount : 8%')
       elif self.grand_total_price > 500_000:
           self.grand_total_price -= self.grand_total_price * 0.1
