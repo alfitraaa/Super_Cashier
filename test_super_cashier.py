@@ -1,4 +1,3 @@
-import pytest
 from unittest import mock
 
 from super_cashier import Transaction
@@ -87,13 +86,6 @@ def test_check_order_invalid_price(capsys):
     assert "There is a data input error" in captured.out
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "Known defect: totals that do not match the 5% branch evaluate the broken "
-        "8% condition, which references local grand_total_price before assignment."
-    ),
-)
 def test_total_price_no_discount(capsys):
     t = Transaction()
     t.add_item("Apple", 2, 50000)  # Total: 100,000
@@ -104,13 +96,6 @@ def test_total_price_no_discount(capsys):
     assert "The total amount to be paid is: Rp 100000" in captured.out
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "Known defect: the exact Rp200,000 no-discount boundary reaches the broken "
-        "8% condition after the 5% condition evaluates false."
-    ),
-)
 def test_total_price_200k_boundary_no_discount(capsys):
     t = Transaction()
     t.add_item("Apple", 2, 100000)  # Total: 200,000
@@ -143,14 +128,7 @@ def test_total_price_300k_boundary_uses_5_percent(capsys):
     assert "The total amount to be paid is: Rp 285000.0" in captured.out
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "Known defect: the 8% branch references local grand_total_price instead of "
-        "self.grand_total_price."
-    ),
-)
-def test_total_price_8_percent_discount_defect(capsys):
+def test_total_price_8_percent_discount(capsys):
     t = Transaction()
     t.add_item("Apple", 4, 100000)  # Total: 400,000
     str(t)
@@ -161,13 +139,6 @@ def test_total_price_8_percent_discount_defect(capsys):
     assert "The total amount to be paid is: Rp 368000.0" in captured.out
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "Known defect: the exact Rp500,000 boundary should use the 8% tier, but the "
-        "8% condition references local grand_total_price before assignment."
-    ),
-)
 def test_total_price_500k_boundary_uses_8_percent(capsys):
     t = Transaction()
     t.add_item("Apple", 5, 100000)  # Total: 500,000
@@ -179,13 +150,6 @@ def test_total_price_500k_boundary_uses_8_percent(capsys):
     assert "The total amount to be paid is: Rp 460000.0" in captured.out
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "Known defect: totals above Rp500,000 evaluate the broken 8% condition before "
-        "the 10% branch can be reached."
-    ),
-)
 def test_total_price_10_percent_discount(capsys):
     t = Transaction()
     t.add_item("Apple", 2, 300000)  # Total: 600,000
