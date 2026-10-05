@@ -39,7 +39,7 @@ This project is built purely in Python and demonstrates the following technical 
 - **Transaction-State Handling**: Uses a dictionary to store and manage the current state of items in the cart.
 - **Item Management Operations**: Implements methods to Create, Read, Update, and Delete items from the shopping list.
 - **Validation Logic**: Basic type checking checks if quantities and prices are integers during order validation.
-- **Conditional Discount Logic**: Implements business rules to apply specific discount percentages based on spending thresholds.
+- **Conditional Discount Logic**: Contains tiered discount business rules based on spending thresholds; the current 8% tier has a known implementation defect.
 - **Receipt/Output Generation**: Utilizes f-strings and the `datetime` module to format terminal output into a readable receipt.
 
 ## Example / Test Scenarios
@@ -94,18 +94,7 @@ To run this project locally, ensure you have Python installed, then clone the re
    cd Super_Cashier
    ```
 
-2. You can explore the code and run manual tests using the provided Jupyter Notebook (`test_case.ipynb`).
-
-3. Alternatively, you can import the `Transaction` class into your own Python script:
-   ```python
-   from super_cashier import Transaction
-
-   my_cart = Transaction()
-   my_cart.add_item("Apple", 5, 10000)
-   # To compute and apply discounts before checking out, total_price must be run:
-   my_cart.total_price()
-   my_cart.check_out()
-   ```
+2. Open and explore `test_case.ipynb`. This Jupyter Notebook serves as the canonical example of the supported execution flow and demonstrates how to initialize and use the `Transaction` class found in `super_cashier.py`.
 
 ## Author / Contact
 
